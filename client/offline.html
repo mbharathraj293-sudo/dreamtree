@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline | The Dreaming Tree</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=Poppins:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <style>
+    :root {
+      --primary: #0F3D2E;
+      --accent: #D4A017;
+      --bg: #F8F6F1;
+      --text: #1C1C1C;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--primary);
+      color: var(--bg);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      text-align: center;
+      padding: 24px;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 48px 32px;
+      max-width: 440px;
+      backdrop-filter: blur(16px);
+      box-shadow: 0 24px 48px rgba(0,0,0,0.3);
+    }
+    h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.2rem;
+      margin: 16px 0 8px;
+      color: var(--accent);
+    }
+    p {
+      font-size: 0.95rem;
+      line-height: 1.6;
+      color: rgba(248, 246, 241, 0.8);
+      margin-bottom: 32px;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background-color: var(--accent);
+      color: var(--primary);
+      padding: 12px 28px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 600;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      transition: 0.3s ease;
+    }
+    .btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(212, 160, 23, 0.4);
+    }
+    .icon {
+      width: 48px;
+      height: 48px;
+      stroke: var(--accent);
+      margin: 0 auto;
+    }
+    .contact-info {
+      margin-top: 32px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding-top: 24px;
+      font-size: 0.85rem;
+    }
+    .contact-info h3 {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin: 0 0 10px;
+      color: var(--accent);
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon"><path d="M1 1t4 4M16.72 11.06A10.94 10.94 0 0 1 19 12.5a3 3 0 0 0 3-3v-6a3 3 0 0 0-3-3H5a3 3 0 0 0-3 3v6a3 3 0 0 0 3 3 10.94 10.94 0 0 1 2.28-1.44"/><path d="M12 13a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/><path d="M12 2v2"/><path d="M12 18v4"/><path d="M4.93 4.93l1.41 1.41"/><path d="M17.66 17.66l1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="M6.34 17.66l-1.41 1.41"/><path d="M19.07 4.93l-1.41 1.41"/></svg>
+    <h1>Connection Lost</h1>
+    <p>It looks like you are currently offline. You can still access some cached content of our treehouse menu, or contact us directly below.</p>
+    <a href="tel:+919585946599" class="btn">
+      <i data-lucide="phone"></i> Call Reservations
+    </a>
+    <div class="contact-info">
+      <h3>Direct Contacts</h3>
+      <div>WhatsApp Support: +91 95859 46599</div>
+      <div style="margin-top: 4px;">Email: info@thedreamingtree.in</div>
+    </div>
+  </div>
+  <script>
+    if (typeof lucide !== 'undefined') {
+      lucide.createIcons();
+    }
+  </script>
+</body>
+</html>

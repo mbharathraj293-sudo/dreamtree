@@ -1,0 +1,165 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  SUPERADMIN
+  ADMIN
+  STAFF
+  CUSTOMER
+}
+
+enum ReservationStatus {
+  PENDING
+  CONFIRMED
+  CANCELLED
+  COMPLETED
+  NO_SHOW
+}
+
+model User {
+  id              String         @id @default(uuid())
+  email           String         @unique
+  passwordHash    String
+  role            Role           @default(CUSTOMER)
+  name            String
+  phone           String?
+  isVerified      Boolean        @default(false)
+  otpCode         String?
+  otpExpiry       DateTime?
+  avatar          String?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+  sessions        Session[]
+  logs            ActivityLog[]
+  reservations    Reservation[]
+}
+
+model Session {
+  id           String   @id @default(uuid())
+  userId       String
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  token        String   @unique
+  device       String?
+  ipAddress    String?
+  expiresAt    DateTime
+  createdAt    DateTime @default(now())
+}
+
+model CustomerProfile {
+  id            String   @id @default(uuid())
+  email         String   @unique
+  loyaltyPoints Int      @default(0)
+  visitCount    Int      @default(0)
+  historyNotes  String?
+  createdAt     DateTime @default(now())
+}
+
+model Table {
+  id           String        @id @default(uuid())
+  number       Int           @unique
+  capacity     Int
+  status       String        @default("AVAILABLE") // AVAILABLE, RESERVED, OCCUPIED, MAINTENANCE
+  reservations Reservation[]
+}
+
+model Reservation {
+  id          String            @id @default(uuid())
+  userId      String?
+  user        User?             @relation(fields: [userId], references: [id], onDelete: SetNull)
+  name        String
+  email       String
+  phone       String
+  guests      Int
+  date        DateTime
+  timeSlot    String
+  tableId     String?
+  table       Table?            @relation(fields: [tableId], references: [id], onDelete: SetNull)
+  status      ReservationStatus @default(PENDING)
+  notes       String?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+}
+
+model Category {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  slug        String   @unique
+  description String?
+  menuItems   MenuItem[]
+}
+
+model MenuItem {
+  id            String   @id @default(uuid())
+  name          String
+  description   String
+  price         Float
+  discountPrice Float?
+  imageUrl      String?
+  categoryId    String
+  category      Category @relation(fields: [categoryId], references: [id])
+  isVeg         Boolean  @default(true)
+  isVegan       Boolean  @default(false)
+  isGlutenFree  Boolean  @default(false)
+  isAvailable   Boolean  @default(true)
+  isFeatured    Boolean  @default(false)
+  prepTime      Int      @default(15) // in minutes
+  createdAt     DateTime @default(now())
+}
+
+model Blog {
+  id        String   @id @default(uuid())
+  title     String
+  slug      String   @unique
+  content   String
+  summary   String
+  image     String?
+  author    String
+  published Boolean  @default(false)
+  createdAt DateTime @default(now())
+}
+
+model Testimonial {
+  id         String   @id @default(uuid())
+  name       String
+  role       String
+  text       String
+  rating     Int      @default(5)
+  image      String?
+  isApproved Boolean  @default(false)
+  createdAt  DateTime @default(now())
+}
+
+model FAQ {
+  id        String @id @default(uuid())
+  question  String
+  answer    String
+  category  String
+}
+
+model Subscriber {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  active    Boolean  @default(true)
+  createdAt DateTime @default(now())
+}
+
+model Setting {
+  key   String @id
+  value String
+}
+
+model ActivityLog {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  action    String
+  details   String?
+  ipAddress String?
+  createdAt DateTime @default(now())
+}
